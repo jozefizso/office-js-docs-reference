@@ -20,6 +20,30 @@ isPreview: false
 isDeprecated: false
 type: interface
 properties:
+  - name: actions
+    uid: 'outlook!Office.NotificationMessageDetails#actions:member'
+    package: outlook!
+    fullName: actions
+    summary: >-
+      Specifies actions for the message. Limit: 1 action. This limit doesn't count the "Dismiss" action which is
+      included by default. Only applicable when the type is `InsightMessage`<!-- -->. Specifying this property for an
+      unsupported type or including too many actions throws an error.
+
+
+      **Important**: In modern Outlook on the web, the `actions` property is available in Compose mode only.
+
+
+      \[ [API set: Mailbox 1.10](/office/dev/add-ins/reference/requirement-sets/outlook-api-requirement-sets) \]
+    remarks: >-
+      **[Applicable Outlook
+      mode](https://docs.microsoft.com/office/dev/add-ins/outlook/outlook-add-ins-overview#extension-points)<!-- -->**:
+      Compose or Read
+    isPreview: false
+    isDeprecated: false
+    syntax:
+      content: 'actions?: NotificationMessageAction[];'
+      return:
+        type: '<xref uid="outlook!Office.NotificationMessageAction:interface" />[]'
   - name: icon
     uid: 'outlook!Office.NotificationMessageDetails#icon:member'
     package: outlook!

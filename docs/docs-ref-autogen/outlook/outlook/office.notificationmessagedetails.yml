@@ -33,12 +33,12 @@ properties:
       **Important**: In modern Outlook on the web, the `actions` property is available in Compose mode only.
 
 
-      \[ [API set: Mailbox Preview](/office/dev/add-ins/reference/requirement-sets/outlook-api-requirement-sets) \]
+      \[ [API set: Mailbox 1.10](/office/dev/add-ins/reference/requirement-sets/outlook-api-requirement-sets) \]
     remarks: >-
       **[Applicable Outlook
       mode](https://docs.microsoft.com/office/dev/add-ins/outlook/outlook-add-ins-overview#extension-points)<!-- -->**:
       Compose or Read
-    isPreview: true
+    isPreview: false
     isDeprecated: false
     syntax:
       content: 'actions?: NotificationMessageAction[];'

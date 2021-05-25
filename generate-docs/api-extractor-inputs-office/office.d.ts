@@ -561,6 +561,10 @@ export declare namespace Office {
     }
     /**
      * An interface that contains all the functionality provided to manage the state of the Office ribbon.
+     *
+     * @remarks
+     *
+     * **Requirement set**: Ribbon 1.1
      */
     export interface Ribbon {
         /**
@@ -584,14 +588,19 @@ export declare namespace Office {
          * **Requirement set**: Ribbon 1.1
          *
          * Note that this API is only to request an update. The actual UI update to the ribbon is controlled by the Office application and hence the exact timing of the ribbon update (or refresh) cannot be determined by the completion of this API.
-         * For code examples, see  {@link https://docs.microsoft.com/office/dev/add-ins/design/disable-add-in-commands | Enable and Disable Add-in Commands} and {@link https://docs.microsoft.com/office/dev/add-ins/design/contextual-tabs | Create custom contextual tabs}.
          * 
+         * For code examples, see  {@link https://docs.microsoft.com/office/dev/add-ins/design/disable-add-in-commands | Enable and Disable Add-in Commands} and {@link https://docs.microsoft.com/office/dev/add-ins/design/contextual-tabs | Create custom contextual tabs}.
+         *
          * @param input - Represents the updates to be made to the ribbon. Note that only the changes specified in the input parameter are made.
          */
         requestUpdate(input: RibbonUpdaterData): Promise<void>;
     }
     /**
      * Specifies changes to the ribbon, such as the enabled or disabled status of a button.
+     *
+     * @remarks
+     *
+     * **Requirement set**: Ribbon 1.1
      */
     export interface RibbonUpdaterData {
         /**
@@ -601,6 +610,10 @@ export declare namespace Office {
     }
     /**
      * Represents an individual tab and the state it should have. For code examples, see  {@link https://docs.microsoft.com/office/dev/add-ins/design/disable-add-in-commands | Enable and Disable Add-in Commands} and {@link https://docs.microsoft.com/office/dev/add-ins/design/contextual-tabs | Create custom contextual tabs}.
+     *
+     * @remarks
+     *
+     * **Requirement set**: Ribbon 1.1
      */
     export interface Tab {
         /**
@@ -608,22 +621,68 @@ export declare namespace Office {
          */
         id: string;
         /**
-         * Specifies the controls in the tab, such as menu items, buttons, etc.
+         * Specifies one or more of the controls in the tab, such as menu items, buttons, etc.
+         * 
+         * @remarks
+         * 
+         * When the `Tab` object is part of a {@link Office.RibbonUpdaterData} object passed to the `requestUpdate` method of {@link Office.Ribbon}, this property specifies the IDs of the controls whose enabled status is to be changed. However, if there is a `groups` property on the tab, then this property is ignored and the `controls` properties of the specified groups must be used to change enabled status.
          */
         controls?: Control[];
         /**
          * Specifies whether the tab is visible on the ribbon. Used only with contextual tabs.
+         * 
+         * @remarks
+         *
+         * **Requirement set**: Ribbon 1.2
          */
         visible?: boolean;
+        /**
+         * Specifies one or more of the control groups on the tab.
+         * 
+         * @remarks
+         * 
+         * When the `Tab` object is part of an {@link Office.RibbonUpdaterData} object passed to the `requestUpdate` method of {@link Office.Ribbon}, the `controls` properties of the various {@link Office.Group} objects specify which controls have their enabled status changed; the `controls` property of the `Tab` object is ignored. 
+         *
+         * **Requirement set**: Ribbon 1.1
+         */
+        groups?: Group[];
+    }
+    /**
+     * Represents a group of controls on a ribbon tab.
+     *
+     * **Requirement set**: Ribbon 1.1
+     */
+    export interface Group {
+        /**
+         * Identifier of the group as specified in the manifest.
+         * 
+         */
+         id: string;
+         /**
+          * Specifies one or more of the controls in the group, such as menu items, buttons, etc.
+          * 
+          * @remarks
+          * 
+          * When the `Group` object is part of an {@link Office.RibbonUpdaterData} object passed to the `requestUpdate` method of {@link Office.Ribbon}, the `controls` properties of the various {@link Office.Group} objects specify which controls have their enabled status changed; the `controls` property of the `Group` object's parent `Tab` object is ignored. 
+          */
+         controls?: Control[];
     }
     /**
      * Represents an individual control or command and the state it should have.
+     *
+     * @remarks
+     *
+     * **Requirement set**: Ribbon 1.1
      */
     export interface Control {
         /**
          * Identifier of the control as specified in the manifest.
          */
         id: string;
+        /**
+         * Indicates whether the control should be visible or hidden. The default is true.
+         */
+        visible?: boolean;
         /**
          * Indicates whether the control should be enabled or disabled. The default is true.
          */
@@ -2068,7 +2127,7 @@ export declare namespace Office {
          * The event handler receives an argument of type
          * {@link https://docs.microsoft.com/javascript/api/outlook/office.officethemechangedeventargs?view=outlook-js-preview | Office.OfficeThemeChangedEventArgs}.
          *
-         * [Api set: Mailbox Preview]
+         * [Api set: Mailbox preview]
          *
          * @beta
          */

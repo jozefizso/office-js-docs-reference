@@ -5,6 +5,17 @@ import {Office as CommonAPI} from "../../api-extractor-inputs-office/office"
 
 export declare namespace Office {
     export namespace MailboxEnums {
+        /**
+         * Specifies the type of custom action in a notification message.
+         *
+         * [Api set: Mailbox 1.10]
+         */
+         enum ActionType {
+            /**
+             * The `showTaskPane` action.
+             */
+            ShowTaskPane = "showTaskPane"
+        }
         
         
         /**
@@ -35,6 +46,29 @@ export declare namespace Office {
             Cloud = "cloud"
         }
         
+        /**
+         * Compose type.
+         *
+         * [Api set: Mailbox 1.10]
+         *
+         * @remarks
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/outlook-add-ins-overview#extension-points | Applicable Outlook mode}**: Compose
+         */
+         enum ComposeType {
+            /**
+             * Reply.
+             */
+            Reply = "reply",
+            /**
+             * New mail.
+             */
+            NewMail = "newMail",
+            /**
+             * Forward.
+             */
+            Forward = "forward"
+        }
         
         
         /**
@@ -501,6 +535,48 @@ export declare namespace Office {
          */
         addItemAttachmentAsync(itemId: any, attachmentName: string, callback?: (asyncResult: CommonAPI.AsyncResult<string>) => void): void;
         
+        /**
+         * Disables the Outlook client signature.
+         *
+         * For Windows and Mac rich clients, this API sets the signature under the "New Message" and "Replies/Forwards" sections
+         * for the sending account to "(none)", effectively disabling the signature.
+         * For Outlook on the web, the API should disable the signature option for new mails, replies, and forwards.
+         * If the signature is selected, this API call should disable it.
+         *
+         * [Api set: Mailbox 1.10]
+         *
+         * @remarks
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/understanding-outlook-add-in-permissions | Minimum permission level}**: `ReadWriteItem`
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/outlook-add-ins-overview#extension-points | Applicable Outlook mode}**: Appointment Organizer
+         *
+         * @param options - An object literal that contains one or more of the following properties.
+         *        `asyncContext`: Developers can provide any object they wish to access in the callback method.
+         * @param callback - Optional. When the method completes, the function passed in the callback parameter is called with a single parameter,
+         *                `asyncResult`, which is an `Office.AsyncResult` object.
+         */
+        disableClientSignatureAsync(options: CommonAPI.AsyncContextOptions, callback?: (asyncResult: CommonAPI.AsyncResult<void>) => void): void;
+        /**
+         * Disables the Outlook client signature.
+         *
+         * For Windows and Mac rich clients, this API sets the signature under the "New Message" and "Replies/Forwards" sections
+         * for the sending account to "(none)", effectively disabling the signature.
+         * For Outlook on the web, the API should disable the signature option for new mails, replies, and forwards.
+         * If the signature is selected, this API call should disable it.
+         *
+         * [Api set: Mailbox 1.10]
+         *
+         * @remarks
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/understanding-outlook-add-in-permissions | Minimum permission level}**: `ReadWriteItem`
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/outlook-add-ins-overview#extension-points | Applicable Outlook mode}**: Appointment Organizer
+         *
+         * @param callback - Optional. When the method completes, the function passed in the callback parameter is called with a single parameter,
+         *                `asyncResult`, which is an `Office.AsyncResult` object.
+         */
+        disableClientSignatureAsync(callback?: (asyncResult: CommonAPI.AsyncResult<void>) => void): void;
         
         
         
@@ -563,6 +639,48 @@ export declare namespace Office {
         getSelectedDataAsync(coercionType: CommonAPI.CoercionType | string, callback: (asyncResult: CommonAPI.AsyncResult<string>) => void): void;
         
         
+        /**
+         * Gets if the client signature is enabled.
+         *
+         * For Windows and Mac rich clients, the API call should return `true` if the default signature for new messages, replies, or forwards is set
+         * to a template for the sending Outlook account.
+         * For Outlook on the web, the API call should return `true` if the signature is enabled for compose types `newMail`, `reply`, or `forward`.
+         * If the settings are set to "(none)" in Mac or Windows rich clients or disabled in Outlook on the Web, the API call should return `false`.
+         *
+         * [Api set: Mailbox 1.10]
+         *
+         * @remarks
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/understanding-outlook-add-in-permissions | Minimum permission level}**: `ReadItem`
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/outlook-add-ins-overview#extension-points | Applicable Outlook mode}**: Appointment Organizer
+         *
+         * @param options - An object literal that contains one or more of the following properties.
+         *        `asyncContext`: Developers can provide any object they wish to access in the callback method.
+         * @param callback - When the method completes, the function passed in the `callback` parameter is called with a single parameter of
+         *                   type `Office.AsyncResult`.
+         */
+        isClientSignatureEnabledAsync(options: CommonAPI.AsyncContextOptions, callback: (asyncResult: CommonAPI.AsyncResult<boolean>) => void): void;
+        /**
+         * Gets if the client signature is enabled.
+         *
+         * For Windows and Mac rich clients, the API call should return `true` if the default signature for new messages, replies, or forwards is set
+         * to a template for the sending Outlook account.
+         * For Outlook on the web, the API call should return `true` if the signature is enabled for compose types `newMail`, `reply`, or `forward`.
+         * If the settings are set to "(none)" in Mac or Windows rich clients or disabled in Outlook on the Web, the API call should return `false`.
+         *
+         * [Api set: Mailbox 1.10]
+         *
+         * @remarks
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/understanding-outlook-add-in-permissions | Minimum permission level}**: `ReadItem`
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/outlook-add-ins-overview#extension-points | Applicable Outlook mode}**: Appointment Organizer
+         *
+         * @param callback - When the method completes, the function passed in the `callback` parameter is called with a single parameter of
+         *                   type `Office.AsyncResult`.
+         */
+        isClientSignatureEnabledAsync(callback: (asyncResult: CommonAPI.AsyncResult<boolean>) => void): void;
         /**
          * Asynchronously loads custom properties for this add-in on the selected item.
          *
@@ -707,6 +825,72 @@ export declare namespace Office {
          *                 type `Office.AsyncResult`.
          */
         setSelectedDataAsync(data: string, callback?: (asyncResult: CommonAPI.AsyncResult<void>) => void): void;
+        /**
+         * Adds or replaces the signature of the item body.
+         *
+         * **Important**: In Outlook on the web, `setSignatureAsync` only works on messages.
+         *
+         * **Important**: If your add-in implements the 
+         * {@link https://docs.microsoft.com/office/dev/add-ins/outlook/autolaunch | event-based activation feature using `LaunchEvent` in the manifest},
+         * and calls `setSignatureAsync` in the event handler, the following behavior applies.
+         *
+         * - When the user composes a new item (including reply or forward), the signature is set but doesn't modify the form. This means
+         * if the user closes the form without making other edits, they won't be prompted to save changes.
+         *
+         * [Api set: Mailbox 1.10]
+         *
+         * @remarks
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/understanding-outlook-add-in-permissions | Minimum permission level}**: `ReadWriteItem`
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/outlook-add-ins-overview#extension-points | Applicable Outlook mode}**: Compose
+         *
+         * **Errors**:
+         *
+         * - `DataExceedsMaximumSize`: The `data` parameter is longer than 30,000 characters.
+         *
+         * - `InvalidFormatError`: The `options.coercionType` parameter is set to `Office.CoercionType.Html` and the message body is in plain text.
+         *
+         * @param data - The string that represents the signature to be set in the body of the mail. This string is limited to 30,000 characters.
+         * @param options - An object literal that contains one or more of the following properties.
+         *        `asyncContext`: Developers can provide any object they wish to access in the callback method.
+         *        `coercionType`: The format the signature should be set to. If Text, the method sets the signature to plain text,
+         *                        removing any HTML tags present. If Html, the method sets the signature to HTML.
+         * @param callback - Optional. When the method completes, the function passed in the `callback` parameter is called with a single parameter
+         *                             of type `Office.AsyncResult`.
+         */
+        setSignatureAsync(data: string, options: CommonAPI.AsyncContextOptions & CoercionTypeOptions, callback?: (asyncResult: CommonAPI.AsyncResult<void>) => void): void;
+        /**
+         * Adds or replaces the signature of the item body.
+         *
+         * **Important**: In Outlook on the web, `setSignatureAsync` only works on messages.
+         *
+         * **Important**: If your add-in implements the 
+         * {@link https://docs.microsoft.com/office/dev/add-ins/outlook/autolaunch | event-based activation feature using `LaunchEvent` in the manifest},
+         * and calls `setSignatureAsync` in the event handler, the following behavior applies.
+         *
+         * - When the user composes a new item (including reply or forward), the signature is set but doesn't modify the form. This means
+         * if the user closes the form without making other edits, they won't be prompted to save changes.
+         *
+         * [Api set: Mailbox 1.10]
+         *
+         * @remarks
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/understanding-outlook-add-in-permissions | Minimum permission level}**: `ReadWriteItem`
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/outlook-add-ins-overview#extension-points | Applicable Outlook mode}**: Compose
+         *
+         * **Errors**:
+         *
+         * - `DataExceedsMaximumSize`: The `data` parameter is longer than 30,000 characters.
+         *
+         * - `InvalidFormatError`: The `options.coercionType` parameter is set to `Office.CoercionType.Html` and the message body is in plain text.
+         *
+         * @param data - The string that represents the signature to be set in the body of the mail. This string is limited to 30,000 characters.
+         * @param callback - Optional. When the method completes, the function passed in the `callback` parameter is called with a single parameter
+         *                             of type `Office.AsyncResult`.
+         */
+        setSignatureAsync(data: string, callback?: (asyncResult: CommonAPI.AsyncResult<void>) => void): void;
     }
     /**
      * The `AppointmentForm` object is used to access the currently selected appointment.
@@ -2782,10 +2966,94 @@ export declare namespace Office {
          */
         addItemAttachmentAsync(itemId: any, attachmentName: string, callback?: (asyncResult: CommonAPI.AsyncResult<string>) => void): void;
         
+        /**
+         * Disables the Outlook client signature.
+         *
+         * For Windows and Mac rich clients, this API sets the signature under the "New Message" and "Replies/Forwards" sections
+         * for the sending account to "(none)", effectively disabling the signature.
+         * For Outlook on the web, the API should disable the signature option for new mails, replies, and forwards.
+         * If the signature is selected, this API call should disable it.
+         *
+         * [Api set: Mailbox 1.10]
+         *
+         * @remarks
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/understanding-outlook-add-in-permissions | Minimum permission level}**: `ReadWriteItem`
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/outlook-add-ins-overview#extension-points | Applicable Outlook mode}**: Message Compose
+         *
+         * @param options - An object literal that contains one or more of the following properties.
+         *        `asyncContext`: Developers can provide any object they wish to access in the callback method.
+         * @param callback - Optional. When the method completes, the function passed in the callback parameter is called with a single parameter,
+         *                `asyncResult`, which is an `Office.AsyncResult` object.
+         */
+        disableClientSignatureAsync(options: CommonAPI.AsyncContextOptions, callback?: (asyncResult: CommonAPI.AsyncResult<void>) => void): void;
+        /**
+         * Disables the Outlook client signature.
+         *
+         * For Windows and Mac rich clients, this API sets the signature under the "New Message" and "Replies/Forwards" sections
+         * for the sending account to "(none)", effectively disabling the signature.
+         * For Outlook on the web, the API should disable the signature option for new mails, replies, and forwards.
+         * If the signature is selected, this API call should disable it.
+         *
+         * [Api set: Mailbox 1.10]
+         *
+         * @remarks
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/understanding-outlook-add-in-permissions | Minimum permission level}**: `ReadWriteItem`
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/outlook-add-ins-overview#extension-points | Applicable Outlook mode}**: Message Compose
+         *
+         * @param callback - Optional. When the method completes, the function passed in the callback parameter is called with a single parameter,
+         *                `asyncResult`, which is an `Office.AsyncResult` object.
+         */
+        disableClientSignatureAsync(callback?: (asyncResult: CommonAPI.AsyncResult<void>) => void): void;
         
         
         
         
+        /**
+         * Specifies the type of message compose and its coercion type. The message can be new, or a reply or forward.
+         * The coercion type can be HTML or plain text.
+         *
+         * [Api set: Mailbox 1.10]
+         *
+         * @remarks
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/understanding-outlook-add-in-permissions | Minimum permission level}**: `ReadItem`
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/outlook-add-ins-overview#extension-points | Applicable Outlook mode}**: Message Compose
+         *
+         * @param options - An object literal that contains one or more of the following properties.
+         *        `asyncContext`: Developers can provide any object they wish to access in the callback method.
+         * @param callback - When the method completes, the function passed in the `callback` parameter is called with a single parameter of
+         *                 type `Office.AsyncResult`. On success, the `asyncResult.value` property contains an object with the item's compose type
+         *                 and coercion type.
+         *
+         * @returns
+         * An object with `ComposeType` and `CoercionType` enum values for the message item.
+         */
+        getComposeTypeAsync(options: CommonAPI.AsyncContextOptions, callback: (asyncResult: CommonAPI.AsyncResult<any>) => void): void;
+        /**
+         * Specifies the type of message compose and its coercion type. The message can be new, or a reply or forward.
+         * The coercion type can be HTML or plain text.
+         *
+         * [Api set: Mailbox 1.10]
+         *
+         * @remarks
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/understanding-outlook-add-in-permissions | Minimum permission level}**: `ReadItem`
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/outlook-add-ins-overview#extension-points | Applicable Outlook mode}**: Message Compose
+         *
+         * @param callback - When the method completes, the function passed in the `callback` parameter is called with a single parameter of
+         *                 type `Office.AsyncResult`. On success, the `asyncResult.value` property contains an object with the item's compose type
+         *                 and coercion type.
+         *
+         * @returns
+         * An object with `ComposeType` and `CoercionType` enum values for the message item.
+         */
+        getComposeTypeAsync(callback: (asyncResult: CommonAPI.AsyncResult<any>) => void): void;
         
         
         /**
@@ -2844,6 +3112,48 @@ export declare namespace Office {
         getSelectedDataAsync(coercionType: CommonAPI.CoercionType | string, callback: (asyncResult: CommonAPI.AsyncResult<any>) => void): void;
         
         
+        /**
+         * Gets if the client signature is enabled.
+         *
+         * For Windows and Mac rich clients, the API call should return `true` if the default signature for new messages, replies, or forwards is set
+         * to a template for the sending Outlook account.
+         * For Outlook on the web, the API call should return `true` if the signature is enabled for compose types `newMail`, `reply`, or `forward`.
+         * If the settings are set to "(none)" in Mac or Windows rich clients or disabled in Outlook on the Web, the API call should return `false`.
+         *
+         * [Api set: Mailbox 1.10]
+         *
+         * @remarks
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/understanding-outlook-add-in-permissions | Minimum permission level}**: `ReadItem`
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/outlook-add-ins-overview#extension-points | Applicable Outlook mode}**: Message Compose
+         *
+         * @param options - An object literal that contains one or more of the following properties.
+         *        `asyncContext`: Developers can provide any object they wish to access in the callback method.
+         * @param callback - When the method completes, the function passed in the `callback` parameter is called with a single parameter of
+         *                   type `Office.AsyncResult`.
+         */
+        isClientSignatureEnabledAsync(options: CommonAPI.AsyncContextOptions, callback: (asyncResult: CommonAPI.AsyncResult<boolean>) => void): void;
+        /**
+         * Gets if the client signature is enabled.
+         *
+         * For Windows and Mac rich clients, the API call should return `true` if the default signature for new messages, replies, or forwards is set
+         * to a template for the sending Outlook account.
+         * For Outlook on the web, the API call should return `true` if the signature is enabled for compose types `newMail`, `reply`, or `forward`.
+         * If the settings are set to "(none)" in Mac or Windows rich clients or disabled in Outlook on the Web, the API call should return `false`.
+         *
+         * [Api set: Mailbox 1.10]
+         *
+         * @remarks
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/understanding-outlook-add-in-permissions | Minimum permission level}**: `ReadItem`
+         *
+         * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/outlook-add-ins-overview#extension-points | Applicable Outlook mode}**: Message Compose
+         *
+         * @param callback - When the method completes, the function passed in the `callback` parameter is called with a single parameter of
+         *                   type `Office.AsyncResult`.
+         */
+        isClientSignatureEnabledAsync(callback: (asyncResult: CommonAPI.AsyncResult<boolean>) => void): void;
         /**
          * Asynchronously loads custom properties for this add-in on the selected item.
          *
@@ -3533,6 +3843,34 @@ export declare namespace Office {
         loadCustomPropertiesAsync(callback: (asyncResult: CommonAPI.AsyncResult<CustomProperties>) => void, userContext?: any): void;
         
         
+    }
+    /**
+     * The definition of the action for a notification message.
+     *
+     * **Important**: In modern Outlook on the web, the `NotificationMessageAction` object is available in Compose mode only.
+     *
+     * [Api set: Mailbox 1.10]
+     *
+     * @remarks
+     *
+     * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/understanding-outlook-add-in-permissions | Minimum permission level}**: `ReadItem`
+     *
+     * **{@link https://docs.microsoft.com/office/dev/add-ins/outlook/outlook-add-ins-overview#extension-points | Applicable Outlook mode}**: Compose or Read
+     */
+    export interface NotificationMessageAction {
+        /**
+         * The type of action to be performed.
+         * `ActionType.ShowTaskPane` is the only supported action.
+         */
+        actionType: string | MailboxEnums.ActionType;
+        /**
+         * The text of the action link.
+         */
+        actionText: string;
+        /**
+         * The button defined in the manifest based on the item type.
+         */
+        commandId: string;
     }
     
     

@@ -13,6 +13,8 @@ items:
           - name: MailboxEnums
             uid: ''
             items:
+              - name: ActionType
+                uid: 'outlook!Office.MailboxEnums.ActionType:enum'
               - name: AttachmentContentFormat
                 uid: 'outlook!Office.MailboxEnums.AttachmentContentFormat:enum'
               - name: AttachmentStatus
@@ -21,6 +23,8 @@ items:
                 uid: 'outlook!Office.MailboxEnums.AttachmentType:enum'
               - name: CategoryColor
                 uid: 'outlook!Office.MailboxEnums.CategoryColor:enum'
+              - name: ComposeType
+                uid: 'outlook!Office.MailboxEnums.ComposeType:enum'
               - name: Days
                 uid: 'outlook!Office.MailboxEnums.Days:enum'
               - name: DelegatePermissions
@@ -115,6 +119,8 @@ items:
             uid: 'outlook!Office.MessageCompose:interface'
           - name: MessageRead
             uid: 'outlook!Office.MessageRead:interface'
+          - name: NotificationMessageAction
+            uid: 'outlook!Office.NotificationMessageAction:interface'
           - name: NotificationMessageDetails
             uid: 'outlook!Office.NotificationMessageDetails:interface'
           - name: NotificationMessages
@@ -284,6 +290,8 @@ items:
                 uid: 'office!Office.GetSelectedDataOptions:interface'
               - name: GoToByIdOptions
                 uid: 'office!Office.GoToByIdOptions:interface'
+              - name: Group
+                uid: 'office!Office.Group:interface'
               - name: IPromiseConstructor
                 uid: 'office!Office.IPromiseConstructor:interface'
               - name: MatrixBinding

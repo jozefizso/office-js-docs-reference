@@ -29,6 +29,7 @@ interfaces:
   - 'outlook!Office.Message:interface'
   - 'outlook!Office.MessageCompose:interface'
   - 'outlook!Office.MessageRead:interface'
+  - 'outlook!Office.NotificationMessageAction:interface'
   - 'outlook!Office.NotificationMessageDetails:interface'
   - 'outlook!Office.NotificationMessages:interface'
   - 'outlook!Office.Organizer:interface'
@@ -49,7 +50,9 @@ interfaces:
   - 'outlook!Office.Time:interface'
   - 'outlook!Office.UserProfile:interface'
 enums:
+  - 'outlook!Office.MailboxEnums.ActionType:enum'
   - 'outlook!Office.MailboxEnums.AttachmentType:enum'
+  - 'outlook!Office.MailboxEnums.ComposeType:enum'
   - 'outlook!Office.MailboxEnums.Days:enum'
   - 'outlook!Office.MailboxEnums.EntityType:enum'
   - 'outlook!Office.MailboxEnums.ItemNotificationMessageType:enum'
