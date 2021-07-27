@@ -140,7 +140,7 @@ methods:
       - Every dialog box can be moved and resized by the user.
 
 
-      - Every dialog box is centered on the screen when opened.
+      - Every dialog box is centered to the parent window when opened.
 
 
       - Dialog boxes appear on top of the host application and in the order in which they were created.
